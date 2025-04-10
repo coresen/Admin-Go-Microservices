@@ -1,0 +1,131 @@
+syntax = "proto3";
+
+package role;
+option go_package = "./role";
+
+
+message CreateRequest {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string RoleName = 3;
+  string Description = 4;
+  int32 Status = 5;
+  repeated int64 PermissionId = 6;
+}
+
+message CreateResponse {
+  int64 Id = 1;
+}
+
+message UpdateRequest {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string RoleName = 3;
+  string Description = 4;
+  int32 Status = 5;
+  repeated int64 PermissionId = 6;
+}
+
+message UpdateResponse {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string RoleName = 3;
+  string Description = 4;
+  int32 Status = 5;
+  repeated int64 PermissionId = 6;
+}
+
+message PermissionDetail {
+  int64 Id = 1;
+  int64 RoleId = 2;
+  int64 PermissionId = 3;
+}
+
+message DetailResponse {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string RoleName = 3;
+  string Description = 4;
+  int32 Status = 5;
+  repeated PermissionDetail permission = 6;
+}
+
+message ListResponse {
+  repeated DetailResponse data = 1;
+}
+
+message ListRequest {
+  int64 Id = 1;
+  string RoleName = 2;
+  int32 Status = 3;
+}
+
+message DeleteResponse {}
+
+message DeleteRequest {
+  int64 Id = 1;
+}
+
+message PermissionCreateRequest {
+  int64 RoleId = 1;
+  int64 PermissionId = 2;
+}
+
+message PermissionDeleteRequest {
+  int64 Id = 1;
+  int64 RoleId = 2;
+  int64 PermissionId = 3;
+}
+
+message PermissionCreateResponse {
+  int64 Id = 1;
+}
+
+message PermissionDeleteResponse {}
+
+
+message GetRolesByUserIdsReq {
+  repeated int64 GetRolesByUserIdsReq = 1;  // 支持批量查询
+}
+
+message RoleList {
+  repeated DetailResponse roles = 1;
+}
+
+message GetRolesByUserIdsResp {
+  map<int64, RoleList> roles = 1; // user_id -> 角色列表
+}
+
+message GetPermissionByRoleRequest {
+  int64 user_id = 1;
+  repeated int64 role_ids = 2;  // 支持批量查询
+}
+
+message PermissionItem {
+  int64 id = 1;
+  string path = 2;
+  string method = 3;
+}
+
+message GetPermissionByRoleResponse {
+  repeated PermissionItem data = 1;
+}
+
+message BindRoleByUserRequest {
+  int64 UserId = 1;
+  repeated int64 RoleId = 2;
+}
+
+message BindRoleByUserResponse {}
+
+service Role {
+  rpc Create(CreateRequest) returns(CreateResponse);
+  rpc Update(UpdateRequest) returns(UpdateResponse);
+  rpc Delete(DeleteRequest) returns(DeleteResponse);
+  rpc List(ListRequest) returns(ListResponse);
+  rpc CreatePermission(PermissionCreateRequest) returns(PermissionCreateResponse);
+  rpc DeletePermission(PermissionDeleteRequest) returns(PermissionDeleteResponse);
+  rpc GetRolesByUserIds (GetRolesByUserIdsReq) returns (GetRolesByUserIdsResp);
+  rpc GetPermissionByRole(GetPermissionByRoleRequest) returns (GetPermissionByRoleResponse);
+  rpc BindRoleByUserId(BindRoleByUserRequest) returns(BindRoleByUserResponse);
+}

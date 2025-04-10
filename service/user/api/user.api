@@ -1,0 +1,105 @@
+syntax = "v1"
+
+info (
+	title:   "用户服务 API"
+	desc:    "提供用户管理功能"
+	author:  "Sam"
+	version: "1.0"
+)
+
+type (
+	LoginRequest {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	LoginResponse {
+		AccessToken  string `json:"accessToken"`
+		AccessExpire int64  `json:"accessExpire"`
+		Username     string `json:"username"`
+	}
+	LogoutRequest  {}
+	LogoutResponse  {}
+	ListRequest {
+		Username *string `form:"username,optional"`
+		Status   *int64  `form:"status,optional"`
+		Page     int64   `form:"page"`
+		PageSize int64   `form:"page_size"`
+	}
+	CreateRequest {
+		ParentId int64   `json:"parent_id"`
+		Username string  `json:"username"`
+		Password string  `json:"password"`
+		Status   int64   `json:"status"`
+		RoleId   []int64 `json:"role_id"`
+	}
+	CreateResponse {
+		Id int64 `json:"id"`
+	}
+	UpdateRequest {
+		Id       uint64  `json:"id"`
+		ParentId int64   `json:"parent_id"`
+		Password string  `json:"password"`
+		Status   int64   `json:"status"`
+		RoleId   []int64 `json:"role_id"`
+	}
+	UpdateResponse {
+		Id       uint64  `json:"id"`
+		ParentId int64   `json:"parent_id"`
+		Username string  `json:"username"`
+		Password string  `json:"password"`
+		RoleId   []int64 `json:"role_id"`
+	}
+	DeleteRequest {
+		Id uint64 `json:"id"`
+	}
+	DeleteResponse  {}
+	Role {
+		Id       uint64 `json:"id"`
+		ParentId uint64 `json:"parent_id"`
+		RoleName string `json:"role_name"`
+	}
+	UserItem {
+		Id        uint64 `json:"id"`
+		ParentId  int64  `json:"parent_id"`
+		Username  string `json:"username"`
+		Password  string `json:"password"`
+		Status    int64  `json:"status"`
+		Ip        string `json:"ip"`
+		LoginLast int64  `json:"login_last"`
+		Role      []Role `json:"role"`
+	}
+	ListResponse {
+		List     []UserItem `json:"list"`
+		Page     int64      `json:"page"`
+		PageSize int64      `json:"page_size"`
+		Count    int64      `json:"count"`
+	}
+)
+
+// 定
+@server (
+	jwt:        Auth // 开启 jwt 认证
+)
+service user-api {
+	@handler List
+	get /api/user/list (ListRequest) returns (ListResponse)
+
+	@handler Logout
+	post /api/user/logout (LogoutRequest) returns (LogoutResponse)
+
+	@handler Create
+	post /api/user/create (CreateRequest) returns (CreateResponse)
+
+	@handler Update
+	put /api/user/update/:id (UpdateRequest) returns (UpdateResponse)
+
+	@handler Delete
+	delete /api/user/login (DeleteRequest) returns (DeleteResponse)
+}
+
+
+service user-api {
+	@handler Login
+	post /api/user/login (LoginRequest) returns (LoginResponse)
+}
+

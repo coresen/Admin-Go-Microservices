@@ -1,0 +1,44 @@
+syntax = "v1"
+
+type (
+	CreateRequest {
+		ParentId  int64  `json:"parent_id"`
+		MenuName  string `json:"menu_name"`
+		Path      string `json:"path"`
+		Method    string `json:"method"`
+		Icon      string `json:"icon"`
+		SortOrder int32  `json:"sort_order"`
+		Status    int32  `json:"status"`
+	}
+	CreateResponse {
+		Id int64 `json:"id"`
+	}
+	UpdateRequest {
+		ParentId  int64  `json:"parent_id"`
+		MenuName  string `json:"menu_name"`
+		Path      string `json:"path"`
+		Method    string `json:"method"`
+		Icon      string `json:"icon"`
+		SortOrder int32  `json:"sort_order"`
+		Status    int32  `json:"status"`
+	}
+	UpdateResponse {
+		Id        int64  `json:"id"`
+		ParentId  int64  `json:"parent_id"`
+		MenuName  string `json:"menu_name"`
+		Path      string `json:"path"`
+		Method    string `json:"method"`
+		Icon      string `json:"icon"`
+		SortOrder int32  `json:"sort_order"`
+		Status    int32  `json:"status"`
+	}
+)
+
+service menu-api {
+	@handler Create
+	post /api/menu/create (CreateRequest) returns (CreateResponse)
+
+	@handler Update
+	put /api/menu/update/:id (UpdateRequest) returns (UpdateResponse)
+}
+

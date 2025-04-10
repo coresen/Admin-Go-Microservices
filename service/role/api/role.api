@@ -1,0 +1,22 @@
+syntax = "v1"
+
+type (
+	CreateRequest {
+		ParentId     int64   `json:"parent_id"`
+		RoleName     string  `json:"role_name"`
+		Description  string  `json:"description"`
+		Status       int32   `json:"status"`
+		PermissionId []int64 `json:"permission_id"`
+	}
+	CreateResponse {
+		Id int64 `json:"id"`
+	}
+
+	
+)
+
+service role-api {
+	@handler Create
+	post /api/role/create (CreateRequest) returns (CreateResponse)
+}
+

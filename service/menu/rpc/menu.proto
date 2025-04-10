@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package menu;
+option go_package="./menu";
+
+
+message CreateRequest {
+    int64 ParentId = 1;
+    string MenuName = 2;
+    string Path = 3;
+    string Method = 4;
+    string Icon = 5;
+    int32 SortOrder = 6;
+    int32 Status = 7;
+}
+
+message CreateResponse {
+  int64 id = 1;
+}
+
+message DetailResponse {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string MenuName = 3;
+  string Path = 4;
+  string Method = 5;
+  string Icon = 6;
+  int32 SortOrder = 7;
+  int32 Status = 8;
+  int64 CreateTime = 9;
+  int64 DeleteTime = 10;
+  int64 UpdateTime = 11;
+  string Code = 12;
+}
+
+message ListRequest {}
+
+message ListResponse {
+  repeated DetailResponse data = 1;
+}
+
+message UpdateRequest {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string MenuName = 3;
+  string Path = 4;
+  string Method = 5;
+  string Icon = 6;
+  int32 SortOrder = 7;
+  int32 Status = 8;
+}
+
+message UpdateResponse {}
+
+message RemoveRequest {
+  int64 id = 1;
+}
+
+message RemoveResponse {
+}
+
+message DetailRequest {
+  int64 id = 1;
+}
+
+
+service Menu {
+  rpc Create(CreateRequest) returns(CreateResponse);
+  rpc Update(UpdateRequest) returns(UpdateResponse);
+  rpc Detail(DetailRequest) returns(DetailResponse);
+  rpc Delete(RemoveRequest) returns(RemoveResponse);
+  rpc List(ListRequest) returns(ListResponse);
+}

@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package user;
+option go_package="./user";
+
+// 用户登录
+message LoginRequest {
+  string Username = 1;
+  string Password = 2;
+  string Ip = 3;
+}
+message LoginResponse {
+  int64 Id = 1;
+  string Username = 2;
+}
+// 用户登录
+
+message ListRequest {
+  optional string Username = 1;
+  optional int64 Status = 2;
+  int64 Page = 3;
+  int64 PageSize = 4;
+}
+
+message UserItem {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Username = 3;
+  string Password = 4;
+  int64 Status = 5;
+  string Ip = 6;
+  int64 CreateTime = 7;
+  int64 LoginLast = 8;
+}
+
+message ListResponse {
+  repeated UserItem data = 1;
+  int64 count = 2;
+}
+
+message CreateUserRequest {
+  string Username = 1;
+  string Password = 2;
+  int64 Status = 3;
+  int64 ParentId = 4;
+  int64 CreateUid = 5;
+  repeated int64 RoleId = 6;
+}
+
+message CreateUserResponse {
+  int64 Id = 1;
+}
+
+message UpdateUserRequest {
+  int64 Id = 1;
+  string Username = 2;
+  string Password = 3;
+  int64 Status = 4;
+  int64 ParentId = 5;
+  int64 CreateUid = 6;
+  repeated int64 RoleId = 7;
+}
+
+message UpdateUserResponse {
+  int64 Id = 1;
+}
+
+message DeleteUserRequest {
+  int64 Id = 1;
+}
+
+message DeleteUserResponse {}
+
+service User {
+  rpc Login(LoginRequest) returns(LoginResponse);
+  rpc List(ListRequest) returns(ListResponse);
+  rpc Create(CreateUserRequest) returns(CreateUserResponse);
+  rpc Update(UpdateUserRequest) returns(UpdateUserResponse);
+  rpc Delete(DeleteUserRequest) returns(DeleteUserResponse);
+}

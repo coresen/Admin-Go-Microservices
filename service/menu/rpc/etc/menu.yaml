@@ -1,0 +1,14 @@
+Name: menu.rpc
+ListenOn: 0.0.0.0:8081
+Etcd:
+  Hosts:
+  - 127.0.0.1:2383
+  Key: menu.rpc
+
+Mysql:
+  DataSource: root:rootpassword@tcp(127.0.0.1:3306)/mydatabase?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Type: node
+    Pass:
