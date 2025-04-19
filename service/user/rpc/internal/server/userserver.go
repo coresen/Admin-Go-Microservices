@@ -6,7 +6,6 @@ package server
 
 import (
 	"context"
-
 	"zore/service/user/rpc/internal/logic"
 	"zore/service/user/rpc/internal/svc"
 	"zore/service/user/rpc/pb/user"
@@ -46,4 +45,9 @@ func (s *UserServer) Update(ctx context.Context, in *user.UpdateUserRequest) (*u
 func (s *UserServer) Delete(ctx context.Context, in *user.DeleteUserRequest) (*user.DeleteUserResponse, error) {
 	l := logic.NewDeleteLogic(ctx, s.svcCtx)
 	return l.Delete(in)
+}
+
+func (s *UserServer) Detail(ctx context.Context, in *user.DetailRequest) (*user.DetailResponse, error) {
+	l := logic.NewDetailLogic(ctx, s.svcCtx)
+	return l.Detail(in)
 }

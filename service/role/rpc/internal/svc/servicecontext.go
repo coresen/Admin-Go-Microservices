@@ -18,7 +18,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:           c,
 		RoleModel:        model.NewRoleModel(conn, c.CacheRedis), //UserModel: model.NewUserModel(conn, c.CacheRedis),
-		UserRoleModel:    model.NewUserRoleModel(conn, c.CacheRedis),
 		PermissionsModel: model.NewPermissionsModel(conn),
+		UserRoleModel:    model.NewUserRoleModel(conn),
 	}
 }

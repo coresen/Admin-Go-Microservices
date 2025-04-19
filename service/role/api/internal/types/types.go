@@ -7,7 +7,7 @@ type CreateRequest struct {
 	ParentId     int64   `json:"parent_id"`
 	RoleName     string  `json:"role_name"`
 	Description  string  `json:"description"`
-	Status       int32   `json:"status"`
+	Status       int64   `json:"status"`
 	PermissionId []int64 `json:"permission_id"`
 }
 

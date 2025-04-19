@@ -9,7 +9,7 @@ message CreateRequest {
   int64 ParentId = 2;
   string RoleName = 3;
   string Description = 4;
-  int32 Status = 5;
+  int64 Status = 5;
   repeated int64 PermissionId = 6;
 }
 
@@ -22,7 +22,7 @@ message UpdateRequest {
   int64 ParentId = 2;
   string RoleName = 3;
   string Description = 4;
-  int32 Status = 5;
+  int64 Status = 5;
   repeated int64 PermissionId = 6;
 }
 
@@ -57,7 +57,7 @@ message ListResponse {
 message ListRequest {
   int64 Id = 1;
   string RoleName = 2;
-  int32 Status = 3;
+  int64 Status = 3;
 }
 
 message DeleteResponse {}
@@ -66,9 +66,13 @@ message DeleteRequest {
   int64 Id = 1;
 }
 
-message PermissionCreateRequest {
+message Permission {
   int64 RoleId = 1;
   int64 PermissionId = 2;
+}
+
+message PermissionCreateRequest {
+  repeated Permission data = 1;
 }
 
 message PermissionDeleteRequest {
@@ -77,9 +81,7 @@ message PermissionDeleteRequest {
   int64 PermissionId = 3;
 }
 
-message PermissionCreateResponse {
-  int64 Id = 1;
-}
+message PermissionCreateResponse {}
 
 message PermissionDeleteResponse {}
 

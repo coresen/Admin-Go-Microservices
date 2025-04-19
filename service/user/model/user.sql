@@ -1,6 +1,6 @@
 CREATE TABLE `user`
 (
-    `id`          bigint  NOT NULL  DEFAULT 0,
+    `id`          bigint  NOT NULL DEFAULT 0,
     `parent_id`  bigint NOT NULL DEFAULT 0,
     `username`        varchar(255)        NOT NULL DEFAULT '' COMMENT '用户姓名',
     `password`    varchar(255)        NOT NULL DEFAULT '' COMMENT '用户密码',

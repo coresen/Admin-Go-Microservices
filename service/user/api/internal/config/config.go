@@ -12,7 +12,11 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int64
 	}
-	
+
+	Mysql struct {
+		DataSource string
+	}
+
 	RoleRpc zrpc.RpcClientConf
 	UserRpc zrpc.RpcClientConf
 }

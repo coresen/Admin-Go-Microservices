@@ -27,6 +27,7 @@ type (
 	GetRolesByUserIdsResp       = role.GetRolesByUserIdsResp
 	ListRequest                 = role.ListRequest
 	ListResponse                = role.ListResponse
+	Permission                  = role.Permission
 	PermissionCreateRequest     = role.PermissionCreateRequest
 	PermissionCreateResponse    = role.PermissionCreateResponse
 	PermissionDeleteRequest     = role.PermissionDeleteRequest

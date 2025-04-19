@@ -5,14 +5,13 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/logx"
 	"time"
 	"zore/common/constant"
 	"zore/common/crypt"
 	"zore/service/user/model"
-	"zore/service/user/rpc/pb/user"
-
-	"github.com/zeromicro/go-zero/core/logx"
 	"zore/service/user/rpc/internal/svc"
+	"zore/service/user/rpc/pb/user"
 )
 
 type LoginLogic struct {

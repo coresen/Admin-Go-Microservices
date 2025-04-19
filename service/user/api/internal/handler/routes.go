@@ -5,7 +5,6 @@ package handler
 
 import (
 	"net/http"
-	"zore/common/middleware"
 
 	"zore/service/user/api/internal/svc"
 
@@ -14,36 +13,33 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{middleware.AuthMiddleware},
-			[]rest.Route{
-				{
-					Method:  http.MethodPost,
-					Path:    "/api/user/create",
-					Handler: CreateHandler(serverCtx),
-				},
-				{
-					Method:  http.MethodGet,
-					Path:    "/api/user/list",
-					Handler: ListHandler(serverCtx),
-				},
-				{
-					Method:  http.MethodDelete,
-					Path:    "/api/user/login",
-					Handler: DeleteHandler(serverCtx),
-				},
-				{
-					Method:  http.MethodPost,
-					Path:    "/api/user/logout",
-					Handler: LogoutHandler(serverCtx),
-				},
-				{
-					Method:  http.MethodPut,
-					Path:    "/api/user/update/:id",
-					Handler: UpdateHandler(serverCtx),
-				},
-			}...,
-		),
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/user/create",
+				Handler: CreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/api/user/list",
+				Handler: ListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/api/user/login",
+				Handler: DeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/user/logout",
+				Handler: LogoutHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/api/user/update/:id",
+				Handler: UpdateHandler(serverCtx),
+			},
+		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
 

@@ -2,12 +2,10 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/bwmarrin/snowflake"
 	"time"
 	"zore/common/crypt"
 	"zore/service/user/model"
-
 	"zore/service/user/rpc/internal/svc"
 	"zore/service/user/rpc/pb/user"
 
@@ -38,9 +36,8 @@ func (l *CreateLogic) Create(in *user.CreateUserRequest) (*user.CreateUserRespon
 	}
 
 	id := node.Generate().Int64()
-	fmt.Println("=====id:", id)
 	_, err = l.svcCtx.UserModel.Insert(l.ctx, &model.User{
-		Id:         uint64(id),
+		Id:         id,
 		ParentId:   in.ParentId,
 		Username:   in.Username,
 		Status:     in.Status,

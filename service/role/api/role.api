@@ -12,11 +12,46 @@ type (
 		Id int64 `json:"id"`
 	}
 
-	
+	UpdateRequest {
+		ParentId     int64   `json:"parent_id"`
+		RoleName     string  `json:"role_name"`
+		Description  string  `json:"description"`
+		Status       int32   `json:"status"`
+		PermissionId []int64 `json:"permission_id"`
+	}
+
+	UpdateResponse {}
+
+	DeleteRequest {}
+
+	DeleteResponse {}
+
+	DetailRequest {}
+
+	DetailResponse {}
+
+	ListRequest {}
+
+	ListResponse {}
 )
 
+@server (
+	jwt: Auth // 开启 jwt 认证
+)
 service role-api {
 	@handler Create
 	post /api/role/create (CreateRequest) returns (CreateResponse)
+
+	@handler Update
+	put /api/role/update/:id (UpdateRequest) returns (UpdateResponse)
+
+	@handler Delete
+	delete /api/role/delete/:id (DeleteRequest) returns (DeleteResponse)
+
+	@handler Detail
+	get /api/role/:id (DetailRequest) returns (DetailResponse)
+
+	@handler List
+	get /api/role/list (ListRequest) returns (ListResponse)
 }
 

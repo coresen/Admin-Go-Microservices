@@ -71,10 +71,24 @@ message DeleteUserRequest {
 
 message DeleteUserResponse {}
 
+message DetailRequest {
+  int64 Id = 1;
+}
+
+message DetailResponse {
+  int64 Id = 1;
+  string Username = 2;
+  string Password = 3;
+  int64 Status = 4;
+  int64 ParentId = 5;
+  int64 CreateUid = 6;
+}
+
 service User {
   rpc Login(LoginRequest) returns(LoginResponse);
   rpc List(ListRequest) returns(ListResponse);
   rpc Create(CreateUserRequest) returns(CreateUserResponse);
   rpc Update(UpdateUserRequest) returns(UpdateUserResponse);
   rpc Delete(DeleteUserRequest) returns(DeleteUserResponse);
+  rpc Detail(DetailRequest) returns(DetailResponse);
 }

@@ -18,6 +18,8 @@ type (
 	CreateUserResponse = user.CreateUserResponse
 	DeleteUserRequest  = user.DeleteUserRequest
 	DeleteUserResponse = user.DeleteUserResponse
+	DetailRequest      = user.DetailRequest
+	DetailResponse     = user.DetailResponse
 	ListRequest        = user.ListRequest
 	ListResponse       = user.ListResponse
 	LoginRequest       = user.LoginRequest
@@ -32,6 +34,7 @@ type (
 		Create(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 		Update(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 		Delete(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
+		Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
 	}
 
 	defaultUser struct {
@@ -68,4 +71,9 @@ func (m *defaultUser) Update(ctx context.Context, in *UpdateUserRequest, opts ..
 func (m *defaultUser) Delete(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.Delete(ctx, in, opts...)
+}
+
+func (m *defaultUser) Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.Detail(ctx, in, opts...)
 }

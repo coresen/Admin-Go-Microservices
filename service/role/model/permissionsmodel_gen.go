@@ -19,7 +19,7 @@ import (
 var (
 	permissionsFieldNames          = builder.RawFieldNames(&Permissions{})
 	permissionsRows                = strings.Join(permissionsFieldNames, ",")
-	permissionsRowsExpectAutoSet   = strings.Join(stringx.Remove(permissionsFieldNames, "`id`"), ",")
+	permissionsRowsExpectAutoSet   = strings.Join(stringx.Remove(permissionsFieldNames), ",")
 	permissionsRowsWithPlaceHolder = strings.Join(stringx.Remove(permissionsFieldNames, "`id`"), "=?,") + "=?"
 )
 
@@ -30,6 +30,7 @@ type (
 		Update(ctx context.Context, data *Permissions) error
 		Delete(ctx context.Context, id int64) error
 		FindRoleList(ctx context.Context, roleIds []int64) ([]*model.Menu, error)
+		BatchInsert(ctx context.Context, permissions []*Permissions) error
 	}
 
 	defaultPermissionsModel struct {
@@ -72,8 +73,8 @@ func (m *defaultPermissionsModel) FindOne(ctx context.Context, id int64) (*Permi
 }
 
 func (m *defaultPermissionsModel) Insert(ctx context.Context, data *Permissions) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?)", m.table, permissionsRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.RoleId, data.PermissionId)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, permissionsRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Id, data.RoleId, data.PermissionId)
 	return ret, err
 }
 
@@ -81,6 +82,20 @@ func (m *defaultPermissionsModel) Update(ctx context.Context, data *Permissions)
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, permissionsRowsWithPlaceHolder)
 	_, err := m.conn.ExecCtx(ctx, query, data.RoleId, data.PermissionId, data.Id)
 	return err
+}
+
+func (m *defaultPermissionsModel) BatchInsert(ctx context.Context, permissions []*Permissions) error {
+
+	blk, err := sqlx.NewBulkInserter(m.conn, "insert into permissions (id, role_id, permission_id) values (? ,?, ?)")
+	if err != nil {
+		panic(err)
+	}
+	defer blk.Flush()
+	for _,v := range permissions {
+		blk.Insert(v.Id, v.RoleId, v.PermissionId)
+	}
+
+	return nil
 }
 
 func (m *defaultPermissionsModel)FindRoleList(ctx context.Context, roleIds []int64) ([]*model.Menu, error)  {

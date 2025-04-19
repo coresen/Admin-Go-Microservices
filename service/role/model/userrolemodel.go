@@ -1,7 +1,6 @@
 package model
 
 import (
-	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
@@ -20,8 +19,8 @@ type (
 )
 
 // NewUserRoleModel returns a model for the database table.
-func NewUserRoleModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option) UserRoleModel {
+func NewUserRoleModel(conn sqlx.SqlConn) UserRoleModel {
 	return &customUserRoleModel{
-		defaultUserRoleModel: newUserRoleModel(conn, c, opts...),
+		defaultUserRoleModel: newUserRoleModel(conn),
 	}
 }

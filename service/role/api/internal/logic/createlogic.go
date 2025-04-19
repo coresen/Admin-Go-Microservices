@@ -27,8 +27,6 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 func (l *CreateLogic) Create(req *types.CreateRequest) (resp *types.CreateResponse, err error) {
 	// todo: add your logic here and delete this line
 
-	var id int64
-
 	roleRes, err := l.svcCtx.RoleRpc.Create(l.ctx, &role.CreateRequest{
 		ParentId:    req.ParentId,
 		Status:      req.Status,
@@ -39,16 +37,26 @@ func (l *CreateLogic) Create(req *types.CreateRequest) (resp *types.CreateRespon
 		return nil, err
 	}
 
-	id = roleRes.Id
+	id := roleRes.Id
 
+	if len(req.PermissionId) == 0 {
+		return &types.CreateResponse{Id: id}, nil
+	}
+
+	data := make([]*role.Permission, len(req.PermissionId))
 	for _, v := range req.PermissionId {
-		_, err = l.svcCtx.RoleRpc.CreatePermission(l.ctx, &role.PermissionCreateRequest{
+		data = append(data, &role.Permission{
 			RoleId:       id,
 			PermissionId: v,
 		})
-		if err != nil {
-			return nil, err
-		}
+	}
+
+	_, err = l.svcCtx.RoleRpc.CreatePermission(l.ctx, &role.PermissionCreateRequest{
+		Data: data,
+	})
+
+	if err != nil {
+		return nil, err
 	}
 
 	return &types.CreateResponse{Id: id}, nil

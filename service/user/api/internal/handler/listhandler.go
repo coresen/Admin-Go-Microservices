@@ -15,16 +15,16 @@ func ListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.ListRequest
 		if err := httpx.Parse(r, &req); err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
+			httpx.OkJsonCtx(r.Context(), w, response.Error(constant.ERROR, err.Error()))
 			return
 		}
 
 		l := logic.NewListLogic(r.Context(), svcCtx)
 		resp, err := l.List(&req)
 		if err != nil {
-			httpx.OkJson(w, response.Error(constant.ERROR, err.Error()))
+			httpx.OkJsonCtx(r.Context(), w, response.Error(constant.ERROR, err.Error()))
 		} else {
-			httpx.OkJson(w, response.Success(resp))
+			httpx.OkJsonCtx(r.Context(), w, response.Success(resp))
 		}
 	}
 }

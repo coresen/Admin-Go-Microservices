@@ -60,10 +60,10 @@ type Role struct {
 }
 
 type UpdateRequest struct {
-	Id       uint64  `json:"id"`
+	Id       int64   `path:"id"`
 	ParentId int64   `json:"parent_id"`
-	Password string  `json:"password"`
-	Status   int64   `json:"status"`
+	Password *string `json:"password"`
+	Status   *int64  `json:"status"`
 	RoleId   []int64 `json:"role_id"`
 }
 

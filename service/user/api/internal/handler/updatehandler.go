@@ -2,6 +2,8 @@ package handler
 
 import (
 	"net/http"
+	"zore/common/constant"
+	"zore/common/response"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"zore/service/user/api/internal/logic"
@@ -13,16 +15,15 @@ func UpdateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.UpdateRequest
 		if err := httpx.Parse(r, &req); err != nil {
-			httpx.OkJson(w, err)
+			httpx.OkJsonCtx(r.Context(), w, response.Error(constant.ERROR, err.Error()))
 			return
 		}
-
 		l := logic.NewUpdateLogic(r.Context(), svcCtx)
 		resp, err := l.Update(&req)
 		if err != nil {
-			httpx.OkJson(w, err)
+			httpx.OkJsonCtx(r.Context(), w, response.Error(constant.ERROR, err.Error()))
 		} else {
-			httpx.OkJson(w, resp)
+			httpx.OkJsonCtx(r.Context(), w, response.Success(resp))
 		}
 	}
 }

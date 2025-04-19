@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/bwmarrin/snowflake"
+	"zore/service/role/model"
 
 	"zore/service/role/rpc/internal/svc"
 	"zore/service/role/rpc/pb/role"
@@ -25,6 +27,25 @@ func NewCreatePermissionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 
 func (l *CreatePermissionLogic) CreatePermission(in *role.PermissionCreateRequest) (*role.PermissionCreateResponse, error) {
 	// todo: add your logic here and delete this line
+
+	node, err := snowflake.NewNode(1) // 1 是节点ID，可以根据实际需要设置不同的值
+	if err != nil {
+		return nil, err
+	}
+
+	data := make([]*model.Permissions, len(in.Data))
+	for i, item := range in.GetData() {
+		id := node.Generate().Int64()
+		data[i] = &model.Permissions{
+			Id:           id,
+			RoleId:       item.GetRoleId(),
+			PermissionId: item.GetPermissionId(),
+		}
+	}
+	err = l.svcCtx.PermissionsModel.BatchInsert(l.ctx, data)
+	if err != nil {
+		return nil, err
+	}
 
 	return &role.PermissionCreateResponse{}, nil
 }

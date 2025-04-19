@@ -8,20 +8,19 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"strings"
-	"time"
-
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"github.com/zeromicro/go-zero/core/stringx"
+	"strings"
+	"time"
 )
 
 var (
 	userFieldNames          = builder.RawFieldNames(&User{})
 	userRows                = strings.Join(userFieldNames, ",")
-	userRowsExpectAutoSet   = strings.Join(userFieldNames, ",")
+	userRowsExpectAutoSet   = strings.Join(stringx.Remove(userFieldNames), ",")
 	userRowsWithPlaceHolder = strings.Join(stringx.Remove(userFieldNames, "`id`"), "=?,") + "=?"
 
 	cacheUserIdPrefix       = "cache:user:id:"
@@ -31,10 +30,10 @@ var (
 type (
 	userModel interface {
 		Insert(ctx context.Context, data *User) (sql.Result, error)
-		FindOne(ctx context.Context, id uint64) (*User, error)
+		FindOne(ctx context.Context, id int64) (*User, error)
 		FindOneByUsername(ctx context.Context, username string) (*User, error)
 		Update(ctx context.Context, data *User) error
-		Delete(ctx context.Context, id uint64) error
+		Delete(ctx context.Context, id int64) error
 		FindPageList(ctx context.Context, username *string, status *int64, page int, pageSize int) ([]*User, error)
 		FindCount(ctx context.Context, username *string, status *int64) (int64, error)
 		TransactCtx(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
@@ -46,7 +45,7 @@ type (
 	}
 
 	User struct {
-		Id         uint64       `db:"id"`
+		Id         int64        `db:"id"`
 		ParentId   int64        `db:"parent_id"`
 		Username   string       `db:"username"` // 用户姓名
 		Password   string       `db:"password"` // 用户密码
@@ -133,7 +132,7 @@ func (m *defaultUserModel) FindCount(ctx context.Context, username *string, stat
 
 	return count, nil
 }
-func (m *defaultUserModel) Delete(ctx context.Context, id uint64) error {
+func (m *defaultUserModel) Delete(ctx context.Context, id int64) error {
 	data, err := m.FindOne(ctx, id)
 	if err != nil {
 		return err
@@ -148,7 +147,7 @@ func (m *defaultUserModel) Delete(ctx context.Context, id uint64) error {
 	return err
 }
 
-func (m *defaultUserModel) FindOne(ctx context.Context, id uint64) (*User, error) {
+func (m *defaultUserModel) FindOne(ctx context.Context, id int64) (*User, error) {
 	userIdKey := fmt.Sprintf("%s%v", cacheUserIdPrefix, id)
 	var resp User
 	err := m.QueryRowCtx(ctx, &resp, userIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
@@ -190,8 +189,7 @@ func (m *defaultUserModel) Insert(ctx context.Context, data *User) (sql.Result, 
 	userUsernameKey := fmt.Sprintf("%s%v", cacheUserUsernamePrefix, data.Username)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userRowsExpectAutoSet)
-		fmt.Println("query:",query)
-		return conn.ExecCtx(ctx, query, data.ParentId, data.Username, data.Password, data.Status, data.Ip, data.CreateUid, data.CreateTime, data.DeleteTime, data.UpdateTime, data.LoginLast)
+		return conn.ExecCtx(ctx, query, data.Id, data.ParentId, data.Username, data.Password, data.Status, data.Ip, data.CreateUid, data.CreateTime, data.DeleteTime, data.UpdateTime, data.LoginLast)
 	}, userIdKey, userUsernameKey)
 	return ret, err
 }

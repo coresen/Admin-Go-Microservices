@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"errors"
 	"zore/service/role/rpc/pb/role"
 	"zore/service/user/rpc/pb/user"
 
@@ -27,18 +28,36 @@ func NewUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateLogi
 
 func (l *UpdateLogic) Update(req *types.UpdateRequest) (resp *types.UpdateResponse, err error) {
 	// todo: add your logic here and delete this line
-	_, err = l.svcCtx.UserRpc.Update(l.ctx, &user.UpdateUserRequest{
-		Id:       int64(req.Id),
-		ParentId: req.ParentId,
-		Password: req.Password,
-		Status:   req.Status,
+	detail, err := l.svcCtx.UserRpc.Detail(l.ctx, &user.DetailRequest{
+		Id: req.Id,
 	})
 	if err != nil {
 		return nil, err
 	}
 
+	if detail == nil {
+		return nil, errors.New("user is nil")
+	}
+
+	data := user.UpdateUserRequest{
+		Id:       req.Id,
+		ParentId: req.ParentId,
+	}
+
+	if req.Password != nil {
+		data.Password = *req.Password
+	}
+
+	if req.Status != nil {
+		data.Status = *req.Status
+	}
+
+	_, err = l.svcCtx.UserRpc.Update(l.ctx, &data)
+	if err != nil {
+		return nil, err
+	}
 	_, err = l.svcCtx.RoleRpc.BindRoleByUserId(l.ctx, &role.BindRoleByUserRequest{
-		UserId: int64(req.Id),
+		UserId: req.Id,
 		RoleId: req.RoleId,
 	})
 
@@ -46,7 +65,7 @@ func (l *UpdateLogic) Update(req *types.UpdateRequest) (resp *types.UpdateRespon
 		return nil, err
 	}
 	return &types.UpdateResponse{
-		Id: req.Id,
+		Id: uint64(req.Id),
 	}, nil
 
 }

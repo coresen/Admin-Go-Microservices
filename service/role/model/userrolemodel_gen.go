@@ -8,7 +8,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/stores/cache"
 	"strings"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
@@ -19,7 +18,7 @@ import (
 var (
 	userRoleFieldNames          = builder.RawFieldNames(&UserRole{})
 	userRoleRows                = strings.Join(userRoleFieldNames, ",")
-	userRoleRowsExpectAutoSet   = strings.Join(stringx.Remove(userRoleFieldNames, "`id`"), ",")
+	userRoleRowsExpectAutoSet   = strings.Join(stringx.Remove(userRoleFieldNames), ",")
 	userRoleRowsWithPlaceHolder = strings.Join(stringx.Remove(userRoleFieldNames, "`id`"), "=?,") + "=?"
 )
 
@@ -41,7 +40,7 @@ type (
 	}
 
 	UserRole struct {
-		Id     int64  `db:"id"`
+		Id     int64 `db:"id"`
 		UserId int64 `db:"user_id"`
 		RoleId int64 `db:"role_id"`
 	}
@@ -93,7 +92,7 @@ func (m *defaultUserRoleModel) FindRolesByUserIds(ctx context.Context, userIds [
 	return roleMap, nil
 }
 
-func newUserRoleModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option) *defaultUserRoleModel {
+func newUserRoleModel(conn sqlx.SqlConn) *defaultUserRoleModel {
 	return &defaultUserRoleModel{
 		conn:  conn,
 		table: "`user_role`",
@@ -141,8 +140,8 @@ func (m *defaultUserRoleModel) FindOneByUserIdRoleId(ctx context.Context, userId
 }
 
 func (m *defaultUserRoleModel) Insert(ctx context.Context, data *UserRole) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?)", m.table, userRoleRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.UserId, data.RoleId)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, userRoleRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Id, data.UserId, data.RoleId)
 	return ret, err
 }
 
@@ -155,14 +154,16 @@ func (m *defaultUserRoleModel) Update(ctx context.Context, newData *UserRole) er
 
 
 func (m *defaultUserRoleModel) BatchInsert(ctx context.Context, roleIds []*UserRole) error {
-
-	blk, err := sqlx.NewBulkInserter(m.conn, "insert into user_role (user_id, role_id) values (?, ?)")
+	if len(roleIds) == 0 {
+		return nil
+	}
+	blk, err := sqlx.NewBulkInserter(m.conn, "insert into user_role (id, user_id, role_id) values (? ,?, ?)")
 	if err != nil {
 		panic(err)
 	}
 	defer blk.Flush()
 	for _, roleId := range roleIds {
-		blk.Insert(roleId.UserId, roleId.RoleId)
+		blk.Insert(roleId.Id, roleId.UserId, roleId.RoleId)
 	}
 
 	return nil

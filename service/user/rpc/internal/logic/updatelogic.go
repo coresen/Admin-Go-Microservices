@@ -5,7 +5,6 @@ import (
 	"time"
 	"zore/common/crypt"
 	"zore/service/user/model"
-
 	"zore/service/user/rpc/internal/svc"
 	"zore/service/user/rpc/pb/user"
 
@@ -32,7 +31,7 @@ func (l *UpdateLogic) Update(in *user.UpdateUserRequest) (*user.UpdateUserRespon
 	in.Password = crypt.PasswordEncrypt(l.svcCtx.Config.Salt, in.Password)
 
 	err := l.svcCtx.UserModel.Update(l.ctx, &model.User{
-		Id:         uint64(in.Id),
+		Id:         in.Id,
 		Password:   in.Password,
 		Status:     in.Status,
 		ParentId:   in.ParentId,
@@ -41,6 +40,7 @@ func (l *UpdateLogic) Update(in *user.UpdateUserRequest) (*user.UpdateUserRespon
 	if err != nil {
 		return nil, err
 	}
+
 	return &user.UpdateUserResponse{
 		Id: in.Id,
 	}, nil
