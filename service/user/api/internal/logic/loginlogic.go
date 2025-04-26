@@ -3,13 +3,10 @@ package logic
 import (
 	"context"
 	"fmt"
-	"zore/common/dict"
-	jwtx "zore/common/jwt"
-	"zore/service/role/rpc/pb/role"
-	"zore/service/user/rpc/pb/user"
-
-	"zore/service/user/api/internal/svc"
-	"zore/service/user/api/internal/types"
+	"user-api/internal/svc"
+	"user-api/internal/types"
+	"zero-common/dict"
+	jwtx "zero-common/jwt"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

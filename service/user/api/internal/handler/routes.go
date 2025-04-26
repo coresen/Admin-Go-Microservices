@@ -5,8 +5,7 @@ package handler
 
 import (
 	"net/http"
-
-	"zore/service/user/api/internal/svc"
+	"user-api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

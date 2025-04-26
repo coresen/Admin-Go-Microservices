@@ -1,14 +1,13 @@
 package handler
 
 import (
-	"net/http"
-	"zore/common/constant"
-	"zore/common/response"
-
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"zore/service/user/api/internal/logic"
-	"zore/service/user/api/internal/svc"
-	"zore/service/user/api/internal/types"
+	"net/http"
+	"user-api/internal/logic"
+	"user-api/internal/svc"
+	"user-api/internal/types"
+	"zero-common/constant"
+	"zero-common/response"
 )
 
 func LogoutHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

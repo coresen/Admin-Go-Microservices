@@ -2,10 +2,10 @@ package svc
 
 import (
 	"github.com/zeromicro/go-zero/zrpc"
-	"zore/common/interceptor"
-	"zore/service/role/rpc/roleclient"
-	"zore/service/user/api/internal/config"
-	"zore/service/user/rpc/userclient"
+	"role-rpc/roleclient"
+	"user-api/internal/config"
+	"user-rpc/userclient"
+	"zero-common/interceptor"
 )
 
 type ServiceContext struct {

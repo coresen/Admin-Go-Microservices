@@ -5,11 +5,11 @@ import (
 	jsoniter "github.com/json-iterator/go"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"net/http"
+	"role-rpc/pb/role"
 	"strings"
-	"zore/common/constant"
-	"zore/common/dict"
-	"zore/common/response"
-	"zore/service/role/rpc/pb/role"
+	"zero-common/constant"
+	"zero-common/dict"
+	"zero-common/response"
 )
 
 func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {

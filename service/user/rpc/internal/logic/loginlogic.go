@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
 	"time"
-	"zore/common/constant"
-	"zore/common/crypt"
-	"zore/service/user/model"
-	"zore/service/user/rpc/internal/svc"
-	"zore/service/user/rpc/pb/user"
+	model "user-model"
+	"user-rpc/internal/svc"
+	"user-rpc/pb/user"
+	"zero-common/constant"
+	"zero-common/crypt"
 )
 
 type LoginLogic struct {

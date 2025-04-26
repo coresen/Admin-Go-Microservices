@@ -2,11 +2,9 @@ package logic
 
 import (
 	"context"
-
-	"zore/service/user/api/internal/svc"
-	"zore/service/user/api/internal/types"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"user-api/internal/svc"
+	"user-api/internal/types"
 )
 
 type LogoutLogic struct {

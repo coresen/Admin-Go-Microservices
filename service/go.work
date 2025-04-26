@@ -1,0 +1,14 @@
+go 1.24
+
+use (
+	menu/api
+	menu/rpc
+	role/api
+	role/rpc
+	user/api
+	user/model
+	user/rpc
+	common
+	menu/model
+	role/model
+)

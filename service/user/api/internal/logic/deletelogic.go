@@ -2,9 +2,8 @@ package logic
 
 import (
 	"context"
-
-	"zore/service/user/api/internal/svc"
-	"zore/service/user/api/internal/types"
+	"user-api/internal/svc"
+	"user-api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

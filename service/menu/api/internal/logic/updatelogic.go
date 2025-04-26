@@ -2,10 +2,9 @@ package logic
 
 import (
 	"context"
-	"zore/service/menu/rpc/pb/menu"
-
-	"zore/service/menu/api/internal/svc"
-	"zore/service/menu/api/internal/types"
+	"menu-api/internal/svc"
+	"menu-api/internal/types"
+	"menu-rpc/pb/menu"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

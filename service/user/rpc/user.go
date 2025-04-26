@@ -8,10 +8,10 @@ import (
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-	"zore/service/user/rpc/internal/config"
-	"zore/service/user/rpc/internal/server"
-	"zore/service/user/rpc/internal/svc"
-	"zore/service/user/rpc/pb/user"
+	"user-rpc/internal/config"
+	"user-rpc/internal/server"
+	"user-rpc/internal/svc"
+	"user-rpc/pb/user"
 )
 
 var configFile = flag.String("f", "etc/user.yaml", "the config file")

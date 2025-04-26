@@ -3,11 +3,7 @@ package logic
 import (
 	"context"
 	"errors"
-	"zore/service/role/rpc/pb/role"
-	"zore/service/user/rpc/pb/user"
-
-	"zore/service/user/api/internal/svc"
-	"zore/service/user/api/internal/types"
+	"user-api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

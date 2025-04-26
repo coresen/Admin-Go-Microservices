@@ -3,12 +3,10 @@ package logic
 import (
 	"context"
 	"github.com/bwmarrin/snowflake"
-	"zore/service/role/model"
-
-	"zore/service/role/rpc/internal/svc"
-	"zore/service/role/rpc/pb/role"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	model "role-model"
+	"role-rpc/internal/svc"
+	"role-rpc/pb/role"
 )
 
 type CreatePermissionLogic struct {

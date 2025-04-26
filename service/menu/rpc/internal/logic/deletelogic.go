@@ -2,11 +2,9 @@ package logic
 
 import (
 	"context"
-
-	"zore/service/menu/rpc/internal/svc"
-	"zore/service/menu/rpc/pb/menu"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"menu-rpc/internal/svc"
+	"menu-rpc/pb/menu"
 )
 
 type DeleteLogic struct {

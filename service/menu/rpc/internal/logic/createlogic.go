@@ -3,11 +3,10 @@ package logic
 import (
 	"context"
 	"database/sql"
+	model "menu-model"
+	"menu-rpc/internal/svc"
+	"menu-rpc/pb/menu"
 	"time"
-	"zore/service/menu/model"
-
-	"zore/service/menu/rpc/internal/svc"
-	"zore/service/menu/rpc/pb/menu"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

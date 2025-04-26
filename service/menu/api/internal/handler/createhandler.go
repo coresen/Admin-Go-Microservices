@@ -1,14 +1,14 @@
 package handler
 
 import (
+	"menu-api/internal/logic"
+	"menu-api/internal/svc"
+	"menu-api/internal/types"
 	"net/http"
-	"zore/common/constant"
-	"zore/common/response"
+	"zero-common/constant"
+	"zero-common/response"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"zore/service/menu/api/internal/logic"
-	"zore/service/menu/api/internal/svc"
-	"zore/service/menu/api/internal/types"
 )
 
 func CreateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

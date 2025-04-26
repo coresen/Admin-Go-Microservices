@@ -6,10 +6,9 @@ package server
 
 import (
 	"context"
-
-	"zore/service/menu/rpc/internal/logic"
-	"zore/service/menu/rpc/internal/svc"
-	"zore/service/menu/rpc/pb/menu"
+	"menu-rpc/internal/logic"
+	"menu-rpc/internal/svc"
+	"menu-rpc/pb/menu"
 )
 
 type MenuServer struct {

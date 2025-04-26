@@ -2,13 +2,12 @@ package logic
 
 import (
 	"context"
-	"time"
-	"zore/common/crypt"
-	"zore/service/user/model"
-	"zore/service/user/rpc/internal/svc"
-	"zore/service/user/rpc/pb/user"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"time"
+	model "user-model"
+	"user-rpc/internal/svc"
+	"user-rpc/pb/user"
+	"zero-common/crypt"
 )
 
 type UpdateLogic struct {

@@ -6,11 +6,10 @@ import (
 	"fmt"
 	"github.com/dtm-labs/client/dtmgrpc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	"zore/service/role/rpc/pb/role"
-	"zore/service/user/rpc/pb/user"
-
-	"zore/service/user/api/internal/svc"
-	"zore/service/user/api/internal/types"
+	"role-rpc/pb/role"
+	"user-api/internal/svc"
+	"user-api/internal/types"
+	"user-rpc/pb/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

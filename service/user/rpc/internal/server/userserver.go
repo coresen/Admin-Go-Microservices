@@ -6,9 +6,9 @@ package server
 
 import (
 	"context"
-	"zore/service/user/rpc/internal/logic"
-	"zore/service/user/rpc/internal/svc"
-	"zore/service/user/rpc/pb/user"
+	"user-rpc/internal/logic"
+	"user-rpc/internal/svc"
+	"user-rpc/pb/user"
 )
 
 type UserServer struct {

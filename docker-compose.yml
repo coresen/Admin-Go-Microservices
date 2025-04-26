@@ -197,6 +197,42 @@ services:
     depends_on:
       - etcd
 
+#  user-api:
+#    build: ./service/user/api
+#    command: go run user.go -f etc/user.yaml
+#    ports:
+#      - "8888:8888"
+#
+#  menu-api:
+#    build: ./user
+#    command: go run user.go -f etc/user.yaml
+#    ports:
+#      - "8888:8888"
+#
+#  role-api:
+#    build: ./user
+#    command: go run user.go -f etc/user.yaml
+#    ports:
+#      - "8888:8888"
+#
+#  user-rpc:
+#    build: ./user
+#    command: go run user.go -f etc/user.yaml
+#    ports:
+#      - "8888:8888"
+#
+#  menu-rpc:
+#    build: ./user
+#    command: go run user.go -f etc/user.yaml
+#    ports:
+#      - "8888:8888"
+#
+#  role-rpc:
+#    build: ./user
+#    command: go run user.go -f etc/user.yaml
+#    ports:
+#      - "8888:8888"
+
 secrets:
   kong_postgres_password:
     file: ./kong-gateway/POSTGRES_PASSWORD

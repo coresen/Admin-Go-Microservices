@@ -4,10 +4,10 @@ import (
 	"context"
 	"github.com/bwmarrin/snowflake"
 	"time"
-	"zore/common/crypt"
-	"zore/service/user/model"
-	"zore/service/user/rpc/internal/svc"
-	"zore/service/user/rpc/pb/user"
+	model "user-model"
+	"user-rpc/internal/svc"
+	"user-rpc/pb/user"
+	"zero-common/crypt"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

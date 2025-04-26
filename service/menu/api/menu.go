@@ -3,12 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"zore/service/menu/api/internal/config"
-	"zore/service/menu/api/internal/handler"
-	"zore/service/menu/api/internal/svc"
-
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
+	"menu-api/internal/config"
+	"menu-api/internal/handler"
+	"menu-api/internal/svc"
 )
 
 var configFile = flag.String("f", "etc/menu-api.yaml", "the config file")

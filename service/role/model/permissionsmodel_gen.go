@@ -8,8 +8,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	model "menu-model"
 	"strings"
-	"zore/service/menu/model"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -91,14 +91,14 @@ func (m *defaultPermissionsModel) BatchInsert(ctx context.Context, permissions [
 		panic(err)
 	}
 	defer blk.Flush()
-	for _,v := range permissions {
+	for _, v := range permissions {
 		blk.Insert(v.Id, v.RoleId, v.PermissionId)
 	}
 
 	return nil
 }
 
-func (m *defaultPermissionsModel)FindRoleList(ctx context.Context, roleIds []int64) ([]*model.Menu, error)  {
+func (m *defaultPermissionsModel) FindRoleList(ctx context.Context, roleIds []int64) ([]*model.Menu, error) {
 
 	if len(roleIds) == 0 {
 		return nil, nil
@@ -109,18 +109,17 @@ func (m *defaultPermissionsModel)FindRoleList(ctx context.Context, roleIds []int
 	}
 	result := strings.Join(placeholders, ",")
 
-
 	args := make([]interface{}, len(roleIds))
 	for i, id := range roleIds {
 		args[i] = id
 	}
 
 	var list []struct {
-		RoleId int64 `db:"role_id"`
-		PermissioId int64 `db:"permission_id"`
-		Id   uint64 `db:"id"`
-		Path   string `db:"path"`
-		Method string `db:"method"`
+		RoleId      int64  `db:"role_id"`
+		PermissioId int64  `db:"permission_id"`
+		Id          uint64 `db:"id"`
+		Path        string `db:"path"`
+		Method      string `db:"method"`
 	}
 
 	query := `select p.role_id, p.permission_id, m.id, m.path, m.method FROM permissions p INNER JOIN menu m ON m.id = p.permission_id WHERE p.role_id IN (` + result + `)`
@@ -136,8 +135,8 @@ func (m *defaultPermissionsModel)FindRoleList(ctx context.Context, roleIds []int
 	res := make([]*model.Menu, len(list))
 	for i, item := range list {
 		res[i] = &model.Menu{
-			Id: item.Id,
-			Path: item.Path,
+			Id:     item.Id,
+			Path:   item.Path,
 			Method: item.Method,
 		}
 	}

@@ -6,8 +6,7 @@ package menuclient
 
 import (
 	"context"
-
-	"zore/service/menu/rpc/pb/menu"
+	"menu-rpc/pb/menu"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

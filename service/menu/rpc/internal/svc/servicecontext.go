@@ -2,8 +2,8 @@ package svc
 
 import (
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	"zore/service/menu/model"
-	"zore/service/menu/rpc/internal/config"
+	model "menu-model"
+	"menu-rpc/internal/config"
 )
 
 type ServiceContext struct {

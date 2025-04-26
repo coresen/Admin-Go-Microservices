@@ -3,7 +3,7 @@ package response
 import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"net/http"
-	"zore/common/constant"
+	"zero-common/constant"
 )
 
 type Response struct {

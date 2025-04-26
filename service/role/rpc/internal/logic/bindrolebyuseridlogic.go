@@ -4,10 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/bwmarrin/snowflake"
-	"zore/service/role/model"
-
-	"zore/service/role/rpc/internal/svc"
-	"zore/service/role/rpc/pb/role"
+	roleModel "role-model"
+	"role-rpc/internal/svc"
+	"role-rpc/pb/role"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -45,9 +44,9 @@ func (l *BindRoleByUserIdLogic) BindRoleByUserId(in *role.BindRoleByUserRequest)
 		return &role.BindRoleByUserResponse{}, nil
 	}
 
-	roles := make([]*model.UserRole, len(in.RoleId))
+	roles := make([]*roleModel.UserRole, len(in.RoleId))
 	for i, v := range in.RoleId {
-		roles[i] = &model.UserRole{
+		roles[i] = &roleModel.UserRole{
 			Id:     node.Generate().Int64(),
 			RoleId: v,
 			UserId: in.UserId,

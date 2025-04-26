@@ -6,10 +6,9 @@ package server
 
 import (
 	"context"
-
-	"zore/service/role/rpc/internal/logic"
-	"zore/service/role/rpc/internal/svc"
-	"zore/service/role/rpc/pb/role"
+	"role-rpc/internal/logic"
+	"role-rpc/internal/svc"
+	"role-rpc/pb/role"
 )
 
 type RoleServer struct {

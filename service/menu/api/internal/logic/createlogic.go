@@ -3,9 +3,9 @@ package logic
 import (
 	"context"
 	"github.com/zeromicro/go-zero/core/logx"
-	"zore/service/menu/api/internal/svc"
-	"zore/service/menu/api/internal/types"
-	"zore/service/menu/rpc/pb/menu"
+	"menu-api/internal/svc"
+	"menu-api/internal/types"
+	"menu-rpc/pb/menu"
 )
 
 type CreateLogic struct {

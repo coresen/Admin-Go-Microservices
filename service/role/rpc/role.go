@@ -3,11 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-
-	"zore/service/role/rpc/internal/config"
-	"zore/service/role/rpc/internal/server"
-	"zore/service/role/rpc/internal/svc"
-	"zore/service/role/rpc/pb/role"
+	"role-rpc/internal/config"
+	"role-rpc/internal/server"
+	"role-rpc/internal/svc"
+	"role-rpc/pb/role"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

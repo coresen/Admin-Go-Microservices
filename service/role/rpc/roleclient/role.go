@@ -6,8 +6,7 @@ package roleclient
 
 import (
 	"context"
-
-	"zore/service/role/rpc/pb/role"
+	"role-rpc/pb/role"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
