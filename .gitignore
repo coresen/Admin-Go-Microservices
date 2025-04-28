@@ -2,4 +2,4 @@
 ./mysql-data/
 ./redis-data/
 ./etcd-data/
-vue-admin/dist/
+web-admin/dist/
